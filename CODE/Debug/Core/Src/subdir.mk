@@ -8,7 +8,7 @@ C_SRCS += \
 ../Core/Src/Button.c \
 ../Core/Src/display_led.c \
 ../Core/Src/fsm_automatic.c \
-../Core/Src/fsm_manual.c \
+../Core/Src/fsm_simple_buttons_run.c \
 ../Core/Src/global.c \
 ../Core/Src/main.c \
 ../Core/Src/software_timer.c \
@@ -22,7 +22,7 @@ OBJS += \
 ./Core/Src/Button.o \
 ./Core/Src/display_led.o \
 ./Core/Src/fsm_automatic.o \
-./Core/Src/fsm_manual.o \
+./Core/Src/fsm_simple_buttons_run.o \
 ./Core/Src/global.o \
 ./Core/Src/main.o \
 ./Core/Src/software_timer.o \
@@ -36,7 +36,7 @@ C_DEPS += \
 ./Core/Src/Button.d \
 ./Core/Src/display_led.d \
 ./Core/Src/fsm_automatic.d \
-./Core/Src/fsm_manual.d \
+./Core/Src/fsm_simple_buttons_run.d \
 ./Core/Src/global.d \
 ./Core/Src/main.d \
 ./Core/Src/software_timer.d \

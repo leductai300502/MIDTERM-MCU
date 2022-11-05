@@ -25,8 +25,8 @@
 #include "software_timer.h"
 #include "Button.h"
 #include "global.h"
+#include "fsm_simple_buttons_run.h"
 #include "fsm_automatic.h"
-#include "fsm_manual.h"
 #include "display_led.h"
 /* USER CODE END Includes */
 
@@ -107,10 +107,10 @@ int main(void)
 	  if(timer2_flag == 1)
 	  {
 		  HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-		  setTimer2(1000);
+		  setTimer2(500);
 	  }
 	  fsm_automatic_run();
-	  fsm_manual_run();
+	  fsm_simple_buttons_run();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

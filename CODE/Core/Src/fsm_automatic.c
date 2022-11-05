@@ -18,16 +18,16 @@ void fsm_automatic_run(){
 		setTimer1(1000);
 		break;
 	case AUTO:
-		display7SEG(counter_led);
+		display7SEG(counter);
 		if(timer1_flag == 1){
-			counter_led--;
+			counter--;
 			status = AUTO;
 			setTimer1(1000);
 		}
 		if(is_Button1_Pressed() == 1)
 		{
 			status = RESET;
-			counter_led = 0;
+			counter = 0;
 			setTimer1(1000);
 		}
 		if(is_Button2_Pressed() == 1)

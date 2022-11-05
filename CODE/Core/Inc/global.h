@@ -18,15 +18,10 @@
 #define RESET 10
 #define INC 11
 #define DEC 12
-#define MODE_PRESS_INC 13
-#define MODE_PRESS_DEC 14
-#define MODE_WAIT 15
-#define MODE_WAIT2 16
-
 
 extern int status;
 extern int counter;
-extern int counter_led;
+extern int counter_wait;
 extern int counter_time;
 
 #endif /* INC_GLOBAL_H_ */
