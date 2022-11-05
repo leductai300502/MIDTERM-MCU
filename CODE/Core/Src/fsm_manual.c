@@ -8,136 +8,187 @@
 
 #include "fsm_manual.h"
 #include "display_led.h"
+#include "global.h"
 #include "main.h"
 
 void fsm_manual_run(){
-//	switch(status){
-//		case MAN_RED:
-//			display7SEG_2(2);
-//			display7SEG(MAX_RED);
-//			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
-//			HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-//			if(timer2_flag == 1){
-//				HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-//				setTimer2(50);
-//			}
-//			if(is_Button1_Pressed() == 1)
-//			{
-//				status = MAN_GREEN;
-//				status_2 = MAN_GREEN;
-//			}
-//			if(is_Button2_Pressed() == 1)
-//			{
-//				MAX_RED++;
-//				MAX_RED2++;
-//			}
-//			if(is_Button3_Pressed() == 1)
-//			{
-//				status = AUTO_RED;
-//				status_2 = AUTO_GREEN;
-//				num_red = 0;
-//				num_green2 = 0;
-//				setTimer1(MAX_RED*100-100);
-//				setTimer3(MAX_GREEN2*100-100);
-//			}
-//			break;
-//		case MAN_GREEN:
-//			display7SEG_2(3);
-//			display7SEG(MAX_GREEN);
-//			HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-//			HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, SET);
-//			if(timer2_flag == 1){
-//				HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-//				setTimer2(50);
-//			}
-//			if(is_Button1_Pressed() == 1)
-//			{
-//				status = MAN_YELLOW;
-//				status_2 = MAN_YELLOW;
-//			}
-//			if(is_Button2_Pressed() == 1)
-//			{
-//				MAX_GREEN++;
-//				MAX_GREEN2++;
-//			}
-//			if(is_Button3_Pressed() == 1)
-//			{
-//				status = AUTO_RED;
-//				status_2 = AUTO_GREEN;
-//				num_red = 0;
-//				num_green2 = 0;
-//				setTimer1(MAX_RED*100-100);
-//				setTimer3(MAX_GREEN2*100-100);
-//			}
-//			break;
-//		case MAN_YELLOW:
-//			display7SEG_2(4);
-//			display7SEG(MAX_YELLOW);
-//			HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, SET);
-//			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin, SET);
-//			if(timer2_flag == 1){
-//				HAL_GPIO_TogglePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin);
-//				setTimer2(50);
-//			}
-//			if(is_Button1_Pressed() == 1)
-//			{
-//				status = MAN_RED;
-//				status_2 = MAN_RED;
-//
-//			}
-//			if(is_Button2_Pressed() == 1)
-//			{
-//				MAX_YELLOW++;
-//				MAX_YELLOW2++;
-//			}
-//			if(is_Button3_Pressed() == 1)
-//			{
-//				status = AUTO_RED;
-//				status_2 = AUTO_GREEN;
-//				num_red = 0;
-//				num_green2 = 0;
-//				setTimer1(MAX_RED*100-100);
-//				setTimer3(MAX_GREEN2*100-100);
-//			}
-//			break;
-//		default:
-//			break;
-//		}
+	switch(status){
+	 	case MODE_WAIT:
+	 		setTimer1(1000);
+	 		counter =0;
+	 		status = INC;
+	 		break;
+	 	case MODE_WAIT2:
+	 		setTimer1(1000);
+	 		counter =0;
+	 		status = DEC;
+	 		break;
+		case RESET:
+			display7SEG(0);
+			if(counter == 10)
+			{
+				counter_led = 9;
+				status = AUTO;
+				setTimer1(1000);
+			}
+			if(timer1_flag == 1)
+			{
+				counter++;
+				setTimer1(1000);
+			}
+			if(is_Button1_Pressed() == 1)
+			{
+				counter =0;
+				counter_led = 0;
+				setTimer1(1000);
+			}
+			if(is_Button2_Pressed() == 1)
+			{
+				status = INC;
+				counter = 0;
+				counter_led = 0;
+				setTimer1(1000);
+			}
+			if(is_Button3_Pressed() == 1)
+			{
+				status = DEC;
+				counter_led =0;
+				counter = 0;
+				setTimer1(1000);
+			}
+			break;
+		case INC:
+			display7SEG(counter_led);
+			if(counter == 10)
+			{
+				status = AUTO;
+				setTimer1(1000);
+			}
+			if(timer1_flag == 1)
+			{
+				counter++;
+				setTimer1(1000);
+			}
+			if(is_Button1_Pressed() == 1)
+			{
+				status = RESET;
+				counter_led = 0;
+				counter = 0;
+				setTimer1(1000);
+			}
+			if(is_Button2_Pressed() == 1)
+			{
+				if(counter_led == 9)
+				{
+					counter_led =0;
+				}
+				else{
+					counter_led++;
+				}
+				counter =0;
+				setTimer1(1000);
+			}
+			if(is_Button2_Pressed_3s() == 1)
+			{
+				setTimer3(1000);
+				counter =0;
+				status = MODE_PRESS_INC;
+			}
+			if(is_Button3_Pressed() == 1)
+			{
+				status = DEC;
+				if(counter_led == 0)
+				{
+					counter_led =9;
+				}
+				else{
+					counter_led--;
+				}
+				counter= 0;
+				setTimer1(1000);
+			}
+			break;
+		case DEC:
+			display7SEG(counter_led);
+			if(counter == 10)
+			{
+				status = AUTO;
+				setTimer1(1000);
+			}
+			if(timer1_flag == 1)
+			{
+				counter++;
+				setTimer1(1000);
+			}
+			if(is_Button1_Pressed() == 1)
+			{
+				status = RESET;
+				counter_led =0;
+				counter =0;
+				setTimer1(1000);
+			}
+			if(is_Button2_Pressed() == 1)
+			{
+				status = INC;
+				if(counter_led == 9)
+				{
+					counter_led =0;
+				}
+				else{
+					counter_led++;
+				}
+				counter =0;
+				setTimer1(1000);
+			}
+			if(is_Button3_Pressed() == 1)
+			{
+				if(counter_led == 0)
+				{
+					counter_led =9;
+				}
+				else{
+					counter_led--;
+				}
+				counter= 0;
+				setTimer1(1000);
+			}
+			if(is_Button3_Pressed_3s() == 1)
+			{
+				counter =0;
+				setTimer3(1000);
+				status = MODE_PRESS_DEC;
+			}
+			break;
+		case MODE_PRESS_INC:
+			display7SEG(counter_led);
+			if(timer3_flag == 1)
+			{
+				if(counter_led == 9)
+				{
+					counter_led =0;
+				}
+				else{
+					counter_led++;
+				}
+				status = MODE_WAIT;
+			}
+			break;
+		case MODE_PRESS_DEC:
+			display7SEG(counter_led);
+			if(timer3_flag == 1)
+			{
+				if(counter_led == 0)
+				{
+					counter_led =9;
+				}
+				else{
+					counter_led--;
+				}
+				status = MODE_WAIT2;
+			}
+			break;
+		default:
+			break;
+		}
 }
 
-void fsm_manual_2_run()
-{
-//	switch(status_2)
-//	{
-//	case MAN_RED:
-//		display7SEG_3(MAX_RED2);
-//		HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, SET);
-//		HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, SET);
-//		if(timer4_flag == 1){
-//			HAL_GPIO_TogglePin(LED_RED2_GPIO_Port, LED_RED2_Pin);
-//			setTimer4(50);
-//		}
-//		break;
-//	case MAN_GREEN:
-//		display7SEG_3(MAX_GREEN2);
-//		HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-//		HAL_GPIO_WritePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin, SET);
-//		if(timer4_flag == 1){
-//			HAL_GPIO_TogglePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin);
-//			setTimer4(50);
-//		}
-//		break;
-//	case MAN_YELLOW:
-//		display7SEG_3(MAX_YELLOW2);
-//		HAL_GPIO_WritePin(LED_RED2_GPIO_Port, LED_RED2_Pin, SET);
-//		HAL_GPIO_WritePin(LED_GREEN2_GPIO_Port, LED_GREEN2_Pin, SET);
-//		if(timer4_flag == 1){
-//			HAL_GPIO_TogglePin(LED_YELLOW2_GPIO_Port, LED_YELLOW2_Pin);
-//			setTimer4(50);
-//		}
-//		break;
-//	default:
-//		break;
-//	}
-
-}

@@ -12,30 +12,21 @@
 #include "Button.h"
 #include "main.h"
 
-#define INIT 1
-#define AUTO_RED 2
-#define AUTO_GREEN 3
-#define AUTO_YELLOW 4
+#define INIT -1
+#define AUTO 0
 
-#define MAN_RED 12
-#define MAN_GREEN 13
-#define MAN_YELLOW 14
+#define RESET 10
+#define INC 11
+#define DEC 12
+#define MODE_PRESS_INC 13
+#define MODE_PRESS_DEC 14
+#define MODE_WAIT 15
+#define MODE_WAIT2 16
+
 
 extern int status;
-extern int status_2;
-extern int num_red;
-extern int num_yellow;
-extern int num_green;
-extern int num_red2;
-extern int num_yellow2;
-extern int num_green2;
-
-extern int MAX_RED;
-extern int MAX_GREEN;
-extern int MAX_YELLOW;
-extern int MAX_RED2;
-extern int MAX_GREEN2;
-extern int MAX_YELLOW2;
-
+extern int counter;
+extern int counter_led;
+extern int counter_time;
 
 #endif /* INC_GLOBAL_H_ */

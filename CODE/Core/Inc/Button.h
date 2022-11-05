@@ -15,6 +15,13 @@
 int is_Button1_Pressed();
 int is_Button2_Pressed();
 int is_Button3_Pressed();
+int is_Button1_Pressed_1s();
+int is_Button2_Pressed_3s();
+int is_Button3_Pressed_3s();
+
+extern int button1_1s_flag;
+extern int button2_3s_flag;
+extern int button3_3s_flag;
 
 void getKeyInput1();
 void getKeyInput2();

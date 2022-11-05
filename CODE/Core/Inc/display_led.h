@@ -9,8 +9,6 @@
 #define INC_DISPLAY_LED_H_
 
 void display7SEG(int );
-void display7SEG_2(int );
-void display7SEG_3(int );
 
 
 #endif /* INC_DISPLAY_LED_H_ */
